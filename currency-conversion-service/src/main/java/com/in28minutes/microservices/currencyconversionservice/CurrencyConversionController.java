@@ -1,5 +1,6 @@
 package com.in28minutes.microservices.currencyconversionservice;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 @RestController
+@Slf4j
 public class CurrencyConversionController {
 
     private CurrencyExchangeClient currencyExchangeClient;
@@ -19,6 +21,7 @@ public class CurrencyConversionController {
     public CurrencyConversionBean convertCurrency(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
 
         CurrencyConversionBean response = currencyExchangeClient.retrieveExchangeValue(from, to);
+        log.info("{}", response);
         return new CurrencyConversionBean(
                 response.getId(),
                 from,
